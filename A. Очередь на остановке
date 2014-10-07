@@ -1,0 +1,60 @@
+#include <conio.h>
+#include <stdio.h>
+#include <iso646.h>
+#include <math.h>  
+
+
+int pplgrps, busseats, pplingr,ngr=1;
+float buses, pplingrs;
+
+
+int main(){
+
+
+
+	printf("Number of bus seats(Volume):");
+	scanf_s("%d", &busseats);
+
+	while (busseats > 100 or busseats < 1){
+		printf("\nPlease, give another number (0 < Bus seats < = 100)\n");
+		printf("Number of bus seats: ");
+		scanf_s("%d", &busseats);
+
+	}
+
+	printf("\n\nNumber of groups: ");
+	scanf_s("%d", &pplgrps);
+
+
+	while (pplgrps<1){
+		printf("\nPlease, give another number (People groups >= 1)\n");
+		printf("Number of people groups: ");
+		scanf_s("%d", &pplgrps);
+	}
+
+
+
+	while (ngr != pplgrps+1){
+
+	
+		printf("Number of people in group N%d: ", ngr);
+		scanf_s("%d", &pplingr);
+
+		while (pplingr < 1 or pplingr > busseats){
+
+			printf("\nPlease, give another number (1 <= People in groups <= Bus seats)\n");
+			printf("Number of people in group N%d: ", ngr);
+			scanf_s("%d", &pplingr);
+
+
+		}
+
+		pplingrs = pplingrs + pplingr;
+		ngr = ngr + 1;
+
+	}
+
+	buses = pplingrs / busseats;
+	printf("\n\nNumber of busses = %.0f", ceil(buses));
+	_getch();
+}

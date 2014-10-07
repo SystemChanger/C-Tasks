@@ -1,60 +1,63 @@
 #include <conio.h>
 #include <stdio.h>
-#include <iso646.h>
-#include <math.h>  
 
 
-int pplgrps, busseats, pplingr,ngr=1;
-float buses, pplingrs;
 
 
 int main(){
 
+	int BusSeats, FreeBusSeats, PeopleGroups, GroupNumber = 1, PeopleInGroup, Buses = 1, PeopleInTheBus = 0;
 
 
 	printf("Number of bus seats(Volume):");
-	scanf_s("%d", &busseats);
+	scanf_s("%d", &BusSeats);
 
-	while (busseats > 100 or busseats < 1){
+	while (BusSeats > 100 || BusSeats < 1){
 		printf("\nPlease, give another number (0 < Bus seats < = 100)\n");
 		printf("Number of bus seats: ");
-		scanf_s("%d", &busseats);
+		scanf_s("%d", &BusSeats);
 
 	}
 
 	printf("\n\nNumber of groups: ");
-	scanf_s("%d", &pplgrps);
+	scanf_s("%d", &PeopleGroups);
 
 
-	while (pplgrps<1){
+	while (PeopleGroups<1){
 		printf("\nPlease, give another number (People groups >= 1)\n");
 		printf("Number of people groups: ");
-		scanf_s("%d", &pplgrps);
+		scanf_s("%d", &PeopleGroups);
 	}
 
 
 
-	while (ngr != pplgrps+1){
+	while (GroupNumber != PeopleGroups + 1){
 
-	
-		printf("Number of people in group N%d: ", ngr);
-		scanf_s("%d", &pplingr);
+		printf("Number of people in group N%d: ", GroupNumber);
+		scanf_s("%d", &PeopleInGroup);
 
-		while (pplingr < 1 or pplingr > busseats){
+		while (PeopleInGroup < 1 || PeopleInGroup > BusSeats){
 
 			printf("\nPlease, give another number (1 <= People in groups <= Bus seats)\n");
-			printf("Number of people in group N%d: ", ngr);
-			scanf_s("%d", &pplingr);
+			printf("Number of people in group N%d: ", GroupNumber);
+			scanf_s("%d", &PeopleInGroup);
 
 
 		}
 
-		pplingrs = pplingrs + pplingr;
-		ngr = ngr + 1;
+		FreeBusSeats = BusSeats - PeopleInTheBus;
+		if (FreeBusSeats < PeopleInGroup){
+			Buses = Buses + 1;
+			FreeBusSeats = BusSeats;
+			PeopleInTheBus = 0;
+		}
+		PeopleInTheBus = PeopleInTheBus + PeopleInGroup;
+
+		GroupNumber = GroupNumber + 1;
 
 	}
 
-	buses = pplingrs / busseats;
-	printf("\n\nNumber of busses = %.0f", ceil(buses));
+
+	printf("\n\nNumber of buses = %d", Buses);
 	_getch();
 }

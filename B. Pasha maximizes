@@ -28,7 +28,8 @@ void main()
 		printf("m = %f\n", m);
 		printf("Number to divide = %f\n", numberToDivide);
 
-		Array[numberOfCell] = floor(numberToDivide - m);
+		Array[numberOfCell] = floor(numberToDivide - m);                               /*К примеру "123456", На последнем этапе выдаёт "5", вместо "6". 123456.000000 - 123450.000000 = 5? Почему так?*/
+
 
 
 		m = floor (numberToDivide)*10;

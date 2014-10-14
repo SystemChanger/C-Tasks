@@ -1,0 +1,98 @@
+#include <stdio.h>
+#include <conio.h>
+#include <math.h>
+
+
+void main()
+{
+	int numberOfDigits=1;
+	long double numberToDivide;
+	long double m = 0, n = 1;
+
+	printf("Enter number to maximize: "); scanf_s("%lf", &numberToDivide);
+
+	while (numberToDivide >= 10) 
+	{
+		numberToDivide = numberToDivide / 10.;
+		numberOfDigits++;
+	
+	
+	}
+
+
+
+	float *Array = new float[numberOfDigits];
+	for (int numberOfCell = 0; numberOfCell < numberOfDigits; numberOfCell++)
+	{
+	
+		printf("m = %f\n", m);
+		printf("Number to divide = %f\n", numberToDivide);
+
+		Array[numberOfCell] = floor(numberToDivide - m);
+
+
+		m = floor (numberToDivide)*10;
+		numberToDivide=numberToDivide*10;
+
+		printf("%f\n", Array[numberOfCell]);
+
+
+
+	
+	}
+
+
+
+	for (int numberOfCell = 0; numberOfCell < numberOfDigits; numberOfCell++) printf("Array[%d]=%.0f\n", numberOfCell, Array[numberOfCell]);
+
+
+
+	int numberOfDigitMoves;
+	printf("Enter number of digit moves: ");
+	scanf_s("%d", &numberOfDigitMoves);
+
+	for (int maxNumber = 0, numberOfShifts = 0, maxValueCell=0, leftCell=0, rightCell = leftCell + 1, valueOfTheLeftCell = 0, valueOfTheRightCell = 0, numberOfDoneDigitMoves = 0; numberOfDoneDigitMoves < numberOfDigitMoves; leftCell++, rightCell++)
+	{
+
+		for (int numberOfCell = 0; numberOfCell < numberOfDigitMoves; numberOfCell++)
+		{
+			if (maxNumber < Array[numberOfCell])
+			{
+				maxNumber = Array[numberOfCell];
+				numberOfShifts = numberOfCell;
+				printf("Number of shifts = %d\n", numberOfShifts);
+				printf("Number of Cell=%d\n", numberOfCell);
+			}
+		}
+
+		leftCell = numberOfShifts - 1, rightCell = leftCell + 1;
+
+		while (Array[maxValueCell] != maxNumber)
+		{
+			valueOfTheLeftCell = Array[rightCell];
+			valueOfTheRightCell = Array[leftCell];
+			Array[leftCell] = valueOfTheLeftCell;
+			Array[rightCell] = valueOfTheRightCell;
+			numberOfDoneDigitMoves++;
+
+			leftCell--; rightCell--;
+		}
+
+		maxValueCell++;
+
+
+		for (int numberOfCell = 0; numberOfCell < numberOfDigits; numberOfCell++) printf("Array[%d]=%.0f\n", numberOfCell, Array[numberOfCell]);
+		
+	}
+
+
+	for (int numberOfCell = 0; numberOfCell < numberOfDigits; numberOfCell++) printf("Array[%d]=%.0f\n", numberOfCell, Array[numberOfCell]);
+
+
+
+
+
+	_getch();
+	
+	delete[] Array;
+}

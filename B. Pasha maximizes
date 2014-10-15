@@ -52,9 +52,24 @@ void main()
 	printf("Enter number of digit moves: ");
 	scanf_s("%d", &numberOfDigitMoves);
 
-	for (int numberOfRepeats=0, numberOfRemainingDigitMoves = numberOfDigitMoves, seenCell = -1, numberOfShifts = 0, maxValueCell = 0, leftCell = 0, rightCell = leftCell + 1, valueOfTheLeftCell = 0, valueOfTheRightCell = 0, numberOfDoneDigitMoves = 0; numberOfDoneDigitMoves < numberOfDigitMoves; maxValueCell++, seenCell++, numberOfRemainingDigitMoves = numberOfDigitMoves - numberOfDoneDigitMoves + 1)
+
+
+	int numberOfRepeats = 0, 
+		numberOfRemainingDigitMoves = numberOfDigitMoves, 
+		seenCell = -1, numberOfShifts = 0, maxValueCell = 0, 
+		leftCell = 0, rightCell = leftCell + 1,
+		valueOfTheLeftCell = 0, valueOfTheRightCell = 0, 
+		numberOfDoneDigitMoves = 0;
+
+
+	
+
+	for (; numberOfDoneDigitMoves < numberOfDigitMoves; )
 	{
+
 		int maxNumber = 0;
+
+
 		for (int numberOfCell = seenCell+1; numberOfCell <= numberOfRemainingDigitMoves; numberOfCell++)
 		{
 							if (numberOfCell >= numberOfDigits) break;
@@ -70,6 +85,8 @@ void main()
 			}
 		}
 
+
+
 		leftCell = numberOfShifts - 1, rightCell = leftCell + 1;
 
 		while (Array[maxValueCell] != maxNumber)
@@ -83,10 +100,23 @@ void main()
 		}
 
 
+		for (int numberOfCell = 0; numberOfCell < numberOfDigits; numberOfCell++) printf("Array[%d]=%.0f\n", numberOfCell, Array[numberOfCell]);
 
 		if (numberOfDoneDigitMoves = numberOfDoneDigitMoves) numberOfRepeats++;
-		if (numberOfRepeats>numberOfDigits) break;
+		if (numberOfRepeats>5) break;
+
+
+
+
+
+		maxValueCell++, seenCell++,
+		numberOfRemainingDigitMoves = numberOfDigitMoves - numberOfDoneDigitMoves + 1;
+
 	}
+
+
+
+
 
 
 	for (int numberOfCell = 0; numberOfCell < numberOfDigits; numberOfCell++) printf("Array[%d]=%.0f\n", numberOfCell, Array[numberOfCell]);

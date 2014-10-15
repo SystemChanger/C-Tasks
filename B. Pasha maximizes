@@ -52,10 +52,10 @@ void main()
 	printf("Enter number of digit moves: ");
 	scanf_s("%d", &numberOfDigitMoves);
 
-	for (int maxNumber = 0, numberOfShifts = 0, maxValueCell=0, leftCell=0, rightCell = leftCell + 1, valueOfTheLeftCell = 0, valueOfTheRightCell = 0, numberOfDoneDigitMoves = 0; numberOfDoneDigitMoves < numberOfDigitMoves; leftCell++, rightCell++)
+	for (int numberOfRemainingDigitMoves = numberOfDigitMoves, seenCell = -1, numberOfShifts = 0, maxValueCell = 0, leftCell = 0, rightCell = leftCell + 1, valueOfTheLeftCell = 0, valueOfTheRightCell = 0, numberOfDoneDigitMoves = 0; numberOfDoneDigitMoves < numberOfDigitMoves; maxValueCell++, seenCell++, numberOfRemainingDigitMoves = numberOfDigitMoves - numberOfDoneDigitMoves + 1)
 	{
-
-		for (int numberOfCell = 0; numberOfCell < numberOfDigitMoves; numberOfCell++)
+		int maxNumber = 0;
+		for (int numberOfCell = seenCell+1; numberOfCell <= numberOfRemainingDigitMoves; numberOfCell++)
 		{
 			if (maxNumber < Array[numberOfCell])
 			{
@@ -79,7 +79,9 @@ void main()
 			leftCell--; rightCell--;
 		}
 
-		maxValueCell++;
+		
+
+
 
 
 		for (int numberOfCell = 0; numberOfCell < numberOfDigits; numberOfCell++) printf("Array[%d]=%.0f\n", numberOfCell, Array[numberOfCell]);

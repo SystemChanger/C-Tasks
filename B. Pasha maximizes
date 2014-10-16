@@ -1,131 +1,103 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <conio.h>
-#include <math.h>
+#include <string.h>
+
 
 
 void main()
 {
-	int numberOfDigits=1;
-	long double numberToDivide;
-	long double m = 0, n = 1;
+	char numberToDivideString[10 ^ 18];
+	printf("Enter number to divide: ");
+	scanf("%s", &numberToDivideString);
 
-	printf("Enter number to maximize: "); scanf_s("%lf", &numberToDivide);
+	int numberOfDigits = strlen(numberToDivideString);
+	printf("Number of digits = %d\n\n", numberOfDigits);
 
-	while (numberToDivide >= 10) 
-	{
-		numberToDivide = numberToDivide / 10.;
-		numberOfDigits++;
-	
-	
-	}
+	for (int i = 0; i < numberOfDigits; i++) printf("numberToDivideString[%d] = %c\n", i, numberToDivideString[i]);
 
 
 
-	float *Array = new float[numberOfDigits];
-	for (int numberOfCell = 0; numberOfCell < numberOfDigits; numberOfCell++)
-	{
-	
-		printf("m = %f\n", m);
-		printf("Number to divide = %f\n", numberToDivide);
+	int swaps;
+	printf("\nEnter number of swaps: ");
+	scanf_s("%d", &swaps);
 
-		Array[numberOfCell] = floor(numberToDivide - m);                               /*К примеру "123456", На последнем этапе выдаёт "5", вместо "6". 123456.000000 - 123450.000000 = 5? Почему так?*/
+	int numberOfTheAllDigits = numberOfDigits;
 
+	int numberOfTheFirstCell=0, numberOfTheLastCell=numberOfDigits-1;
 
-
-		m = floor (numberToDivide)*10;
-		numberToDivide=numberToDivide*10;
-
-		printf("%f\n", Array[numberOfCell]);
+	int numberOfRepeats = swaps+1;
 
 
-
-	
-	}
-
-
-
-	for (int numberOfCell = 0; numberOfCell < numberOfDigits; numberOfCell++) printf("Array[%d]=%.0f\n", numberOfCell, Array[numberOfCell]);
-
-
-
-	int numberOfDigitMoves;
-	printf("Enter number of digit moves: ");
-	scanf_s("%d", &numberOfDigitMoves);
-
-
-
-	int numberOfRepeats = 0, 
-		numberOfRemainingDigitMoves = numberOfDigitMoves, 
-		seenCell = -1, numberOfShifts = 0, maxValueCell = 0, 
-		leftCell = 0, rightCell = leftCell + 1,
-		valueOfTheLeftCell = 0, valueOfTheRightCell = 0, 
-		numberOfDoneDigitMoves = 0;
-
-
-	
-
-	for (; numberOfDoneDigitMoves < numberOfDigitMoves; )
+	while (numberOfTheLastCell != numberOfTheFirstCell)
 	{
 
-		int maxNumber = 0;
 
+		int numberOfShiftsToTheRight = swaps;
 
-		for (int numberOfCell = seenCell+1; numberOfCell <= numberOfRemainingDigitMoves; numberOfCell++)
+		if (numberOfShiftsToTheRight >= numberOfDigits)
 		{
-							if (numberOfCell >= numberOfDigits) break;
+			numberOfShiftsToTheRight = numberOfDigits-1;
+			swaps -= numberOfDigits-1;
+		}
 
-			if (maxNumber < Array[numberOfCell])
+
+		int rightCell = numberOfShiftsToTheRight, leftCell = rightCell - 1;         /*ПРОВЕРЕНО: ВЕРНО*/
+
+		if (numberToDivideString[leftCell]<numberToDivideString[rightCell]) 
+		{
+			printf("IF activated\n");
+
+			while (rightCell != numberOfTheFirstCell)
 			{
 
-				maxNumber = Array[numberOfCell];
-				numberOfShifts = numberOfCell;
+				printf("while activated\n");
 
+				if (leftCell < 0) break;
 
+				printf("FIRST IF passed\n");
+
+				numberOfRepeats--;
+				if (numberOfRepeats <= 0) break;
+
+				printf("SECOND IF passed\n");
+
+				char leftCellValue = numberToDivideString[rightCell];
+				char rightCellValue = numberToDivideString[leftCell];
+				numberToDivideString[leftCell] = leftCellValue;
+				numberToDivideString[rightCell] = rightCellValue;
+				printf("numberToDivideString[leftCell] = %c\n", numberToDivideString[leftCell]);
+				printf("numberToDivideString[rightCell] = %c\n", numberToDivideString[rightCell]);
+
+				for (int i = 0; i < numberOfTheAllDigits; i++) printf("\nnumberToDivideString[%d] = %c\n", i, numberToDivideString[i]);
+				leftCell--; rightCell--;
+			
 
 			}
+
+
+
+
+			numberOfTheFirstCell++;
+			swaps = swaps + swaps + 1;                                               /*Тут проблема, пришлось так указать.*/
+
+			printf("numberOfTheFirstCell = %d\n", numberOfTheFirstCell);
+			printf("numberOfDigits = %d\n", numberOfDigits);
+			printf("swaps = %d\n", swaps);
+			printf("numberOfShiftsToTheRight = %d\n", numberOfShiftsToTheRight);
+		
+		
 		}
 
 
 
-		leftCell = numberOfShifts - 1, rightCell = leftCell + 1;
-
-		while (Array[maxValueCell] != maxNumber)
-		{
-			valueOfTheLeftCell = Array[rightCell];
-			valueOfTheRightCell = Array[leftCell];
-			Array[leftCell] = valueOfTheLeftCell;
-			Array[rightCell] = valueOfTheRightCell;
-			numberOfDoneDigitMoves++;
-			leftCell--; rightCell--;
-		}
-
-
-		for (int numberOfCell = 0; numberOfCell < numberOfDigits; numberOfCell++) printf("Array[%d]=%.0f\n", numberOfCell, Array[numberOfCell]);
-
-		if (numberOfDoneDigitMoves = numberOfDoneDigitMoves) numberOfRepeats++;
-		if (numberOfRepeats>5) break;
-
-
-
-
-
-		maxValueCell++, seenCell++,
-		numberOfRemainingDigitMoves = numberOfDigitMoves - numberOfDoneDigitMoves + 1;
 
 	}
 
 
 
-
-
-
-	for (int numberOfCell = 0; numberOfCell < numberOfDigits; numberOfCell++) printf("Array[%d]=%.0f\n", numberOfCell, Array[numberOfCell]);
-
-
-
+	for (int i = 0; i < numberOfTheAllDigits; i++) printf("numberToDivideString[%d] = %c\n", i, numberToDivideString[i]);
 
 
 	_getch();
-	
-	delete[] Array;
 }

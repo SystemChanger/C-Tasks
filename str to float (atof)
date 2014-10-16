@@ -1,0 +1,38 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <conio.h>
+#include <stdlib.h>
+
+int main(void)
+{
+	char numberToDivideString[100];
+	printf("Enter a number to divide: ");
+	scanf("%s", &numberToDivideString);
+
+
+	float numberToDivideFloat;
+	numberToDivideFloat = atof(numberToDivideString);
+	printf("floatStr = %f\n\n", numberToDivideFloat);
+
+
+
+	float numberOfDigits = 1;
+
+	while (numberToDivideFloat > 10)
+	{
+		numberOfDigits = numberOfDigits++;
+		numberToDivideFloat = numberToDivideFloat / 10;
+	}
+
+
+	printf("Number of digits = %f\n\n", numberOfDigits);
+
+	for (int i = 0; i < numberOfDigits; i++) printf("numberToDivideString[%d] = %c\n", i, numberToDivideString[i]);
+
+
+
+	
+
+
+	_getch();
+}

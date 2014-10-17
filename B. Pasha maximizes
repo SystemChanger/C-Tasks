@@ -7,96 +7,89 @@
 
 void main()
 {
-	char numberToDivideString[10 ^ 18];
+	char numberToDivideString[200];
 	printf("Enter number to divide: ");
 	scanf("%s", &numberToDivideString);
 
 	int numberOfDigits = strlen(numberToDivideString);
 	printf("Number of digits = %d\n\n", numberOfDigits);
 
-	for (int i = 0; i < numberOfDigits; i++) printf("numberToDivideString[%d] = %c\n", i, numberToDivideString[i]);
+	char maxdigit ='0';
+	for (int i = 0; i < numberOfDigits; i++) 
+	{
+		if (maxdigit < numberToDivideString[i]) 
+			maxdigit = numberToDivideString[i];
+	
+	}
 
+	printf("max digit = %c", maxdigit);
 
 
 	int swaps;
 	printf("\nEnter number of swaps: ");
 	scanf_s("%d", &swaps);
 
-	int numberOfTheAllDigits = numberOfDigits;
 
-	int numberOfTheFirstCell=0, numberOfTheLastCell=numberOfDigits-1;
+	int numberOfShiftsToTheRight = swaps;
+	int numberOfTheFirstCell = 0, numberOfTheLastCell = numberOfDigits - 1;
+	int numberOfShiftsToTheRightToDo=0;
 
-	int numberOfRepeats = swaps+1;
-
-
-	while (numberOfTheLastCell != numberOfTheFirstCell)
+	while (numberOfShiftsToTheRight >0)
 	{
+		if (swaps <= 0) break;
 
-
-		int numberOfShiftsToTheRight = swaps;
-
-		if (numberOfShiftsToTheRight >= numberOfDigits)
+		if (numberOfShiftsToTheRight > numberOfTheLastCell)
 		{
-			numberOfShiftsToTheRight = numberOfDigits-1;
-			swaps -= numberOfDigits-1;
+			numberOfShiftsToTheRightToDo = numberOfShiftsToTheRight - numberOfTheLastCell;
+			numberOfShiftsToTheRight = numberOfTheLastCell;
 		}
 
+		if (numberToDivideString[numberOfTheFirstCell] == maxdigit)
+			numberOfTheFirstCell++;
 
-		int rightCell = numberOfShiftsToTheRight, leftCell = rightCell - 1;         /*ПРОВЕРЕНО: ВЕРНО*/
 
-		if (numberToDivideString[leftCell]<numberToDivideString[rightCell]) 
+		int rightCell = numberOfShiftsToTheRight + numberOfTheFirstCell, leftCell = rightCell - 1;
+
+
+		while (leftCell >= numberOfTheFirstCell)
 		{
-			printf("IF activated\n");
+			if (swaps <= 0) break;
 
-			while (rightCell != numberOfTheFirstCell)
+			if (numberToDivideString[leftCell] < numberToDivideString[rightCell])
 			{
-
-				printf("while activated\n");
-
-				if (leftCell < 0) break;
-
-				printf("FIRST IF passed\n");
-
-				numberOfRepeats--;
-				if (numberOfRepeats <= 0) break;
-
-				printf("SECOND IF passed\n");
 
 				char leftCellValue = numberToDivideString[rightCell];
 				char rightCellValue = numberToDivideString[leftCell];
 				numberToDivideString[leftCell] = leftCellValue;
 				numberToDivideString[rightCell] = rightCellValue;
-				printf("numberToDivideString[leftCell] = %c\n", numberToDivideString[leftCell]);
-				printf("numberToDivideString[rightCell] = %c\n", numberToDivideString[rightCell]);
 
-				for (int i = 0; i < numberOfTheAllDigits; i++) printf("\nnumberToDivideString[%d] = %c\n", i, numberToDivideString[i]);
-				leftCell--; rightCell--;
-			
-
+				swaps--;
 			}
 
+			leftCell--; rightCell--;
+		}
 
-
-
-			numberOfTheFirstCell++;
-			swaps = swaps + swaps + 1;                                               /*Тут проблема, пришлось так указать.*/
-
-			printf("numberOfTheFirstCell = %d\n", numberOfTheFirstCell);
-			printf("numberOfDigits = %d\n", numberOfDigits);
-			printf("swaps = %d\n", swaps);
-			printf("numberOfShiftsToTheRight = %d\n", numberOfShiftsToTheRight);
 		
-		
+
+
+
+		if (numberOfShiftsToTheRightToDo != 0)
+		{
+			numberOfShiftsToTheRight = numberOfShiftsToTheRightToDo;
+			numberOfShiftsToTheRightToDo = 0;
 		}
 
 
-
+		numberOfTheFirstCell++;
 
 	}
 
+		
+	
 
 
-	for (int i = 0; i < numberOfTheAllDigits; i++) printf("numberToDivideString[%d] = %c\n", i, numberToDivideString[i]);
+
+	for (int i = 0; i < numberOfDigits; i++) printf("numberToDivideString[%d] = %c\n", i, numberToDivideString[i]);
 
 
 	_getch();

@@ -7,90 +7,93 @@
 
 void main()
 {
-	char numberToDivideString[200];
-	printf("Enter number to divide: ");
-	scanf("%s", &numberToDivideString);
+	char Str[200];
+	printf("Enter number to maximize: ");
+	scanf("%s", &Str);
 
-	int numberOfDigits = strlen(numberToDivideString);
-	printf("Number of digits = %d\n\n", numberOfDigits);
-
-	char maxdigit ='0';
-	for (int i = 0; i < numberOfDigits; i++) 
-	{
-		if (maxdigit < numberToDivideString[i]) 
-			maxdigit = numberToDivideString[i];
-	
-	}
-
-	printf("max digit = %c", maxdigit);
+	int digits = strlen(Str); /*Number of digits in the number*/
+	printf("Number of digits = %d\n\n", digits);
 
 
-	int swaps;
+
+	int swaps, notDoneSwaps = 0; /*swaps and swaps to use later*/
 	printf("\nEnter number of swaps: ");
 	scanf_s("%d", &swaps);
 
-
-	int numberOfShiftsToTheRight = swaps;
-	int numberOfTheFirstCell = 0, numberOfTheLastCell = numberOfDigits - 1;
-	int numberOfShiftsToTheRightToDo=0;
-
-	while (numberOfShiftsToTheRight >0)
+	if (swaps >= digits)/*Converting swaps into swaps to use later*/
 	{
-		if (swaps <= 0) break;
-
-		if (numberOfShiftsToTheRight > numberOfTheLastCell)
-		{
-			numberOfShiftsToTheRightToDo = numberOfShiftsToTheRight - numberOfTheLastCell;
-			numberOfShiftsToTheRight = numberOfTheLastCell;
-		}
-
-		if (numberToDivideString[numberOfTheFirstCell] == maxdigit)
-			numberOfTheFirstCell++;
-
-
-		int rightCell = numberOfShiftsToTheRight + numberOfTheFirstCell, leftCell = rightCell - 1;
-
-
-		while (leftCell >= numberOfTheFirstCell)
-		{
-			if (swaps <= 0) break;
-
-			if (numberToDivideString[leftCell] < numberToDivideString[rightCell])
-			{
-
-				char leftCellValue = numberToDivideString[rightCell];
-				char rightCellValue = numberToDivideString[leftCell];
-				numberToDivideString[leftCell] = leftCellValue;
-				numberToDivideString[rightCell] = rightCellValue;
-
-				swaps--;
-			}
-
-			leftCell--; rightCell--;
-		}
-
-		
-
-
-
-		if (numberOfShiftsToTheRightToDo != 0)
-		{
-			numberOfShiftsToTheRight = numberOfShiftsToTheRightToDo;
-			numberOfShiftsToTheRightToDo = 0;
-		}
-
-
-		numberOfTheFirstCell++;
+		notDoneSwaps = swaps - (digits-1);
+		swaps = digits-1;
 
 	}
 
+	int firstCell = 0, lastCell = digits - 1;
+	int maxdigitCell = 0;
+
+	while (firstCell < lastCell)/*main cycle*/
+	{
+
+		for (int i = firstCell; i <= swaps + firstCell; i++)/*Searching for max digit for allowed swaps*/
+		{
+			if (Str[maxdigitCell] < Str[i])
+				maxdigitCell = i;
+		}
+
+
+		int rightCell = maxdigitCell;
+		int leftCell = rightCell - 1;
+
 		
-	
+		int swapsBeforeCycle = swaps;/*remembering starting swaps (or remaining swaps)*/
+
+		if (Str[leftCell] < Str[rightCell]) /*moving maxdigit to the first cell*/
+		{
+			while (leftCell >= firstCell)
+			{
+
+				char leftCellValue = Str[leftCell];
+				char rightCellValue = Str[rightCell];
+
+				Str[leftCell] = rightCellValue;
+				Str[rightCell] = leftCellValue;
+
+				swaps--;
+				if (swaps <= 0) break;
+
+				leftCell--; rightCell--;
+			}
+
+			firstCell++;/*now we have new first cell. Forgetting previous*/
+		}
 
 
 
-	for (int i = 0; i < numberOfDigits; i++) printf("numberToDivideString[%d] = %c\n", i, numberToDivideString[i]);
+		maxdigitCell = firstCell;/*forgetting cell with the max digit*/
 
+		if (notDoneSwaps != 0)
+		{
+			swaps = swaps + notDoneSwaps;
+			notDoneSwaps = 0;
+		}
+
+		if (swaps <= 0) break;/*If all swaps done - ending(exiting)*/
+
+		
+		
+		if (swaps == swapsBeforeCycle && leftCell > -1) 
+			/*If cycle going to repeat previous values - moving to the right,
+			searching for left digits to swap */
+				firstCell++;
+		
+
+	}
+
+	for (int i = 0; i <= lastCell; i++)
+	{
+		printf("Str[%d] = %c\n", i, Str[i]);
+
+	}
 
 	_getch();
+
 }

@@ -1,0 +1,55 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <conio.h>
+#include <string.h>
+
+
+void main()
+{
+	char shift = 0;
+	char keyboardStr[] = "qwertyuiopasdfghjkl;zxcvbnm,./";
+
+	printf("Enter shift directtion: ");
+	scanf("%c", &shift);
+
+
+	char Str[100];
+	printf("Enter your message: ");
+	scanf("%s", &Str);
+
+
+	int firstCell = 0;
+	int lastCell = strlen(Str);
+
+
+
+	int n = 0;
+	if (shift == 'L')
+	{
+		n = 1;
+	}
+
+	if (shift == 'R')
+	{
+		n = -1;
+	}
+
+
+	for (int i = firstCell; i < lastCell; i++)
+	{
+		for (int m = 0; m < 29; m++)
+			if (Str[i] == keyboardStr[m])
+			{
+			    Str[i] = keyboardStr[m + n];
+				break;
+			}
+
+	}
+
+
+
+
+
+	printf("Here's message you meant: %s", Str);
+	_getch();
+}

@@ -1,0 +1,48 @@
+#include <stdio.h>
+#include <conio.h>
+
+void main()
+{
+	int Arr[3];
+
+	for (int i = 0; i < 3; i++)
+	{
+		printf("Enter numer[%d]: ", i);
+		scanf_s("%d", &Arr[i]);
+	}
+
+
+	int caseSwitch = 1;
+	int maxValue = 0;
+	int result = 0;
+
+	switch (caseSwitch)
+	{
+	    case 1:
+			if ( maxValue < (result = Arr[0] + Arr[1] + Arr[2]) )
+				maxValue = result;
+		
+		case 2:
+			if ( maxValue < (result = Arr[0] * Arr[1] * Arr[2]) )
+				maxValue = result;
+
+		case 3:
+			if ( maxValue < (result = Arr[0] + Arr[1] * Arr[2]) )
+				maxValue = result;
+
+		case 4:
+			if ( maxValue < (result = Arr[0] * Arr[1] + Arr[2]) )
+				maxValue = result;
+
+		case 5:
+			if ( maxValue < (result = (Arr[0] + Arr[1]) * Arr[2]) )
+				maxValue = result;
+
+		case 6:
+			if (  maxValue < ( result = Arr[0] * (Arr[1] + Arr[2]) )  )
+				maxValue = result;
+	}
+
+	printf("Max value = %d", maxValue);
+	_getch();
+}

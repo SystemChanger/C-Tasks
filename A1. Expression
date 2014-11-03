@@ -12,12 +12,17 @@ void main()
 	}
 
 
-	int caseSwitch = 1;
+	int caseSwitch = 0;
 	int maxValue = 0;
 	int result = 0;
 
 	switch (caseSwitch)
 	{
+		
+	    case 0:
+			if (Arr[0] == 0 && Arr[1] ==0 && Arr[2] == 0 )
+				goto escape;
+
 	    case 1:
 			if ( maxValue < (result = Arr[0] + Arr[1] + Arr[2]) )
 				maxValue = result;
@@ -42,6 +47,9 @@ void main()
 			if (  maxValue < ( result = Arr[0] * (Arr[1] + Arr[2]) )  )
 				maxValue = result;
 	}
+	
+    escape:
+
 
 	printf("Max value = %d", maxValue);
 	_getch();

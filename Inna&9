@@ -1,0 +1,98 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <conio.h>
+#include <string.h>
+
+
+void main()
+{
+
+	printf("Enter number for Inna: ");
+	char Str[100];
+	scanf("%s", &Str);
+
+	char oldStr[100];
+
+	for (int i = 0; i < strlen(Str); i++)
+	{
+		oldStr[i] = Str[i];
+	}
+
+
+	int maxnumberOfNines = 0;
+	int numberOfMaxNinesVariants = 0;
+	long double oldiStr = 0;
+
+	for (int interval = 1; interval <= strlen(Str)/2; interval++)
+	{
+		int firstCell = 0;
+		int lastCell = strlen(Str) - 1;
+	    long double iStr = 0;
+
+		int n = 1;
+		int numberOfNines = 0;
+
+
+
+		for (int i = 0; i < strlen(Str); i++)
+		{
+			Str[i] = oldStr[i];
+		}
+
+		
+		while (firstCell < lastCell)
+		{
+			for (int i = firstCell; i < lastCell; i = i + interval)
+			{
+				int i1Str = char(Str[i] - '0');
+				int i2Str = char(Str[i + 1] - '0');
+				if (i1Str + i2Str == 9)
+				{
+					numberOfNines++;
+					Str[i] = '9';
+					Str[i + 1] = '0';
+					for (int i = firstCell; i + 1 < lastCell; i++)   // Сдвигаем 0 вконец.
+					{
+						char memL = Str[i + 1];
+						char memR = Str[i + 2];
+
+						Str[i + 1] = memR;
+						Str[i + 2] = memL;
+					}
+
+					n = n * 10;
+				}
+				firstCell = firstCell + interval;
+			}
+
+		}
+
+		for (int i = 0; i <= lastCell; i++)
+			iStr = iStr * 10 + (int)(Str[i] - '0');    // Переводим число в тип integer.
+
+
+		iStr = iStr / n;   // Убираем лишние нули.
+
+		printf("Here's your number = %lg\n", iStr);
+
+
+		if (numberOfNines >= maxnumberOfNines && numberOfNines != 0) 
+		{
+			if (iStr != oldiStr)
+			{
+				numberOfMaxNinesVariants++;
+				oldiStr = iStr;
+			}
+
+			maxnumberOfNines = numberOfNines;
+		}
+
+
+	}
+
+
+	printf("Max number of max nine variants = %d", numberOfMaxNinesVariants);
+
+	_getch();
+}
+
